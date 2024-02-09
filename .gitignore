@@ -1,0 +1,5 @@
+/target
+/kt
+/data/chrome-*
+*.png
+*.sublime-*

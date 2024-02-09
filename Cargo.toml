@@ -1,0 +1,18 @@
+[package]
+name = "gen_sql_labs"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# sqlformat = "0.2.3"
+async-std = "1.12.0"
+chromiumoxide = "0.5.7"
+clap = { version = "4.5.0", features = ["derive"] }
+futures = "0.3.30"
+rusqlite = "0.30.0"
+serde = "1.0.196"
+serde_json = "1.0.113"
+
+tera = { version = "1", default-features = false }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<style>
+  html,
+  body {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  table {
+    width: 100%;
+    max-width: none;
+  }
+
+  th, td {
+    width: 1px;
+    white-space: nowrap;
+  }
+
+  td:last-child {
+    width: 100%;
+  }
+
+  td, th {
+    text-align: left;
+  }
+
+  /* ============ */
+
+  :root {
+    /* --color-sheet: #FDFDFD;
+    --color-alt: #F7F7F7;
+    --color-text: #000000;
+    --color-border: #D7D8D8;
+    --color-meta: #929292; */
+
+    --color-sheet: #090A0A;
+    --color-alt: #0D0E0E;
+    --color-text: #FFFFFF;
+    --color-border: #222323;
+    --color-meta: #4C4D4E;
+  }
+
+  body {
+    font-family: sans-serif;
+    background-color: var(--color-sheet);
+    color: var(--color-text);
+  }
+
+  table,
+  th,
+  td {
+    border-collapse: collapse;
+  }
+
+  th {
+    font-weight: 600;
+
+    border-color: var(--color-border);
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+
+  }
+  td, th {
+    padding: 12px 16px;
+  }
+
+  tr:nth-child(2n) {
+    background-color: var(--color-alt);
+  }
+
+  .meta-val {
+    color: var(--color-meta);
+    font-style: italic;
+  }
+
+</style>
+<body>
+  <table>
+    <tr>
+      <th>ENAME</th>
+      <th>SAL</th>
+      <th>total salary</th>
+      <th>new salary</th>
+      <th>bonus</th>
+      </tr>
+
+    <tr>
+      <td>SMITH</td>
+      <td>800</td>
+      <td class="meta-val">(NULL)</td>
+      <td>1000</td>
+      <td>200</td>
+      </tr>
+    <tr>
+      <td>ALLEN</td>
+      <td>1600</td>
+      <td>1900</td>
+      <td>2000</td>
+      <td>400</td>
+      </tr>
+    <tr>
+      <td>WARD</td>
+      <td>1250</td>
+      <td>1750</td>
+      <td>1562.5</td>
+      <td>312.5</td>
+      </tr>
+    <tr>
+      <td>JONES</td>
+      <td>2975</td>
+      <td class="meta-val">(NULL)</td>
+      <td>3718.75</td>
+      <td>743.75</td>
+      </tr>
+    <tr>
+      <td>MARTIN</td>
+      <td>1250</td>
+      <td>2650</td>
+      <td>1562.5</td>
+      <td>312.5</td>
+      </tr>
+    <tr>
+      <td>BLAKE</td>
+      <td>2850</td>
+      <td class="meta-val">(NULL)</td>
+      <td>3562.5</td>
+      <td>712.5</td>
+      </tr>
+    <tr>
+      <td>CLARK</td>
+      <td>2450</td>
+      <td class="meta-val">(NULL)</td>
+      <td>3062.5</td>
+      <td>612.5</td>
+      </tr>
+    <tr>
+      <td>SCOTT</td>
+      <td>3000</td>
+      <td class="meta-val">(NULL)</td>
+      <td>3750</td>
+      <td>750</td>
+      </tr>
+    <tr>
+      <td>KING</td>
+      <td>5000</td>
+      <td class="meta-val">(NULL)</td>
+      <td>6250</td>
+      <td>1250</td>
+      </tr>
+    <tr>
+      <td>TURNER</td>
+      <td>1500</td>
+      <td>1500</td>
+      <td>1875</td>
+      <td>375</td>
+      </tr>
+    <tr>
+      <td>ADAMS</td>
+      <td>1100</td>
+      <td class="meta-val">(NULL)</td>
+      <td>1375</td>
+      <td>275</td>
+      </tr>
+    <tr>
+      <td>JAMES</td>
+      <td>950</td>
+      <td class="meta-val">(NULL)</td>
+      <td>1187.5</td>
+      <td>237.5</td>
+      </tr>
+    <tr>
+      <td>FORD</td>
+      <td>3000</td>
+      <td class="meta-val">(NULL)</td>
+      <td>3750</td>
+      <td>750</td>
+      </tr>
+    <tr>
+      <td>MILLER</td>
+      <td>1300</td>
+      <td class="meta-val">(NULL)</td>
+      <td>1625</td>
+      <td>325</td>
+      </tr>
+    </table>
+  </body>
+</html>
