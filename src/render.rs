@@ -52,7 +52,7 @@ impl<'a> Engine<'a> {
                 .window_size(WINDOW_SIZE.0, WINDOW_SIZE.1)
                 .viewport(None)
                 .build()
-                .expect("Failed to launch browser config"),
+                .expect("Failed to build browser config"),
         )
         .await
         .expect("Failed to launch browser config");
