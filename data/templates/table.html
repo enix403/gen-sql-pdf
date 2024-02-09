@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<!-- Not allowed to load local resource -->
+<link rel="stylesheet" href="{{ASSET_ROOT | safe}}/fonts/Barlow/stylesheet.css" />
 <style>
   html,
   body {
@@ -43,9 +43,11 @@
   }
 
   body {
-    font-family: sans-serif;
     background-color: var(--color-sheet);
     color: var(--color-text);
+    /* font-family: 'Barlow'; */
+    font-family: 'Fira Code';
+    font-weight: 400;
   }
 
   table,
@@ -78,7 +80,6 @@
   }
 
 </style>
-<!-- <link rel="stylesheet" href="{{ASSET_ROOT | safe}}/hehe.css" /> -->
 <body>
 <table>
   <tr>

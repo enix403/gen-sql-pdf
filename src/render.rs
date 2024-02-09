@@ -21,6 +21,7 @@ pub struct Engine {
     asset_root: PathBuf,
     index_file: String,
     conn: Connection,
+    pub event_task_handle: JoinHandle<()>
 }
 
 impl Engine {
@@ -56,17 +57,17 @@ impl Engine {
         .await
         .expect("Failed to launch browser config");
 
-        let handler = async_std::task::spawn(async move {
+        let task = async_std::task::spawn(async move {
             //
             while let Some(_) = handler.next().await {}
         });
 
-        (browser, handler)
+        (browser, task)
     }
 
     pub async fn new(env: &Environment) -> Self {
         // Setup browser
-        let (mut browser, mut handler) = Self::open_browser(env).await;
+        let (mut browser, mut task) = Self::open_browser(env).await;
 
         // Setup Tera template system
         let templates_dir = env.data_dir.join("templates");
@@ -90,6 +91,7 @@ impl Engine {
             asset_root: templates_dir,
             index_file,
             conn,
+            event_task_handle: task
         }
     }
 

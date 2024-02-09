@@ -59,6 +59,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     engine.process_query(sql).await?;
 
     engine.close().await;
+    // engine.event_task_handle.await;
 
     Ok(())
 }
