@@ -24,8 +24,8 @@ td, th {
 body {
   background-color: var(--color-sheet);
   color: var(--color-text);
-  font-family: 'Barlow';
-  /* font-family: 'Fira Code'; */
+/*  font-family: 'Barlow';*/
+   font-family: 'Fira Code'; 
   font-weight: 400;
 }
 

@@ -15,16 +15,16 @@ pub use crate::Environment;
 
 const WINDOW_SIZE: (u32, u32) = (1892, 1027);
 
-pub struct Engine {
+pub struct Engine<'a> {
+    env: &'a Environment,
     browser: Browser,
     tera: Tera,
-    asset_root: PathBuf,
     index_file: String,
     conn: Connection,
     pub event_task_handle: JoinHandle<()>
 }
 
-impl Engine {
+impl<'a> Engine<'a> {
 
     #[cfg(target_os = "linux")]
     fn get_chrome_exe(env: &Environment) -> PathBuf {
@@ -65,7 +65,7 @@ impl Engine {
         (browser, task)
     }
 
-    pub async fn new(env: &Environment) -> Self {
+    pub async fn new(env: &'a Environment) -> Self {
         // Setup browser
         let (mut browser, mut task) = Self::open_browser(env).await;
 
@@ -86,9 +86,9 @@ impl Engine {
         let conn = database::create_connection(&env.dbfile);
 
         Self {
+            env,
             browser,
             tera,
-            asset_root: templates_dir,
             index_file,
             conn,
             event_task_handle: task
@@ -99,9 +99,11 @@ impl Engine {
         let query = QueryAnswer::from_sql(sql, &self.conn);
 
         let mut context = TeraContext::new();
+        context.insert("THEMES_DIR", &self.env.themes_dir);
+        context.insert("theme", &self.env.theme);
+
         context.insert("headers", &query.headers);
         context.insert("rows", &query.rows);
-        context.insert("ASSET_ROOT", &self.asset_root);
 
         let html = self
             .tera

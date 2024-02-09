@@ -21,13 +21,20 @@ struct Args {
     /// Path of input file containing SQL statements
     #[arg(short, long)]
     infile: PathBuf,
+
+    /// Theme
+    #[arg(short, long)]
+    theme: Option<String>,
 }
 
 #[derive(Debug)]
 pub struct Environment {
     pub dbfile: PathBuf,
     pub infile: PathBuf,
+    pub theme: String,
+    
     pub data_dir: PathBuf,
+    pub themes_dir: PathBuf,
 }
 
 #[async_std::main]
@@ -39,7 +46,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let env = Environment {
         dbfile: args.db,
         infile: args.infile,
+        theme: args.theme.unwrap_or_else(|| "default-light".to_string()),
         data_dir: cwd.join("data"),
+        themes_dir: cwd.join("themes"),
     };
 
     let mut engine = render::Engine::new(&env).await;
