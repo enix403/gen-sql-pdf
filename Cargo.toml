@@ -9,10 +9,6 @@ edition = "2021"
 name = "gen"
 path = "src/main.rs"
 
-[[bin]]
-name = "pdf"
-path = "src/bin/pdf.rs"
-
 [dependencies]
 sqlformat = "0.2.3"
 async-std = "1.12.0"

@@ -18,7 +18,7 @@ const WINDOW_SIZE: (u32, u32) = (1892, 2054);
 
 pub const _TEMP_KEEP_BROWSER_OPEN: bool = false;
 
-pub struct Engine<'a> {
+pub struct Renderer<'a> {
     env: &'a Environment,
     browser: Browser,
     tera: Tera,
@@ -27,7 +27,7 @@ pub struct Engine<'a> {
     pub event_task_handle: JoinHandle<()>,
 }
 
-impl<'a> Engine<'a> {
+impl<'a> Renderer<'a> {
     #[cfg(target_os = "linux")]
     fn get_chrome_exe(env: &Environment) -> PathBuf {
         let mut exe = env.data_dir.clone();
@@ -100,7 +100,7 @@ impl<'a> Engine<'a> {
         }
     }
 
-    pub async fn process_query(&mut self, sql: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
+    pub async fn render_query(&mut self, sql: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         let query = QueryAnswer::from_sql(sql, &self.conn);
 
         let mut context = TeraContext::new();
@@ -150,7 +150,7 @@ impl<'a> Engine<'a> {
         Ok(image)
     }
 
-    pub async fn close(mut self) {
+    pub async fn dispose(mut self) {
         if _TEMP_KEEP_BROWSER_OPEN {
             self.event_task_handle.await;
         } else {

@@ -1,16 +1,16 @@
 use std::io::Cursor;
+use std::path::Path;
 
 use crate::input::QueryList;
-use crate::render::Engine;
+use crate::render::Renderer;
 
-use genpdf::{elements, fonts, Document};
+use genpdf::{elements, fonts, Alignment, Document, Scale, SimplePageDecorator};
 
-pub async fn create_pdf(qlist: QueryList, engine: &mut Engine<'_>) {
+pub async fn create_pdf<P: AsRef<Path>>(qlist: QueryList, renderer: &mut Renderer<'_>, outfile: P) {
     let font_family = genpdf::fonts::from_files("themes/fonts/Cousine", "Cousine", None).unwrap();
     let mut doc = genpdf::Document::new(font_family);
-    doc.set_title("Demo document");
 
-    let mut decorator = genpdf::SimplePageDecorator::new();
+    let mut decorator = SimplePageDecorator::new();
     decorator.set_margins(10);
     doc.set_page_decorator(decorator);
 
@@ -19,21 +19,19 @@ pub async fn create_pdf(qlist: QueryList, engine: &mut Engine<'_>) {
             doc.push(elements::PageBreak::new());
         }
 
-        let mut image = engine
-            .process_query(sql)
+        let mut image = renderer
+            .render_query(sql)
             .await
-            .expect("Engine::process_query(...) error");
+            .expect("Renderer::render_query(...) error");
 
-        let image = Cursor::new(image);
-
-        let image_elem = elements::Image::from_reader(image)
+        let image_elem = elements::Image::from_reader(Cursor::new(image))
             .expect("Failed to load page image")
-            .with_alignment(genpdf::Alignment::Center)
-            .with_scale(genpdf::Scale::new(1.2, 1.2));
+            .with_alignment(Alignment::Center)
+            .with_scale(Scale::new(1.2, 1.2));
 
         doc.push(image_elem);
     }
 
-    doc.render_to_file("output.pdf")
+    doc.render_to_file(outfile)
         .expect("Failed to write PDF file");
 }
