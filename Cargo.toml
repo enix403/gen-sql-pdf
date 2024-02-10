@@ -14,5 +14,5 @@ futures = "0.3.30"
 rusqlite = "0.30.0"
 serde = "1.0.196"
 serde_json = "1.0.113"
-
 tera = { version = "1", default-features = false }
+genpdf = { version = "0.2.0", features = ["images"] }
