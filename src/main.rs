@@ -54,11 +54,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut engine = render::Engine::new(&env).await;
 
     let sql = r#"
-        select
-            ename,
-            sal,
-            sal + comm as "total salary",
-            sal * 1.25 as "new salary",
+        select ename, sal, sal + comm as "total salary", sal * 1.25 as "new salary",
             sal * 1.25 - sal as "bonus",
             sal * 2 as "more bonus"
         from

@@ -5,15 +5,7 @@
 </head>
 <body>
 
-  <pre><code id="code" class="language-sql">SELECT
-  ename,
-  sal,
-  sal + comm as "total salary",
-  sal * 1.25 as "new salary",
-  sal * 1.25 - sal as "bonus",
-  sal * 2 as "more bonus"
-FROM
-  emp</code></pre>
+  <pre><code id="code" class="language-sql">{{ sql | safe }}</code></pre>
 
   <table>
     <tr>

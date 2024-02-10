@@ -110,6 +110,7 @@ impl<'a> Engine<'a> {
         context.insert("THEMES_DIR", &self.env.themes_dir);
         context.insert("theme", &self.env.theme);
 
+        context.insert("sql", sql.trim());
         context.insert("headers", &query.headers);
         context.insert("rows", &query.rows);
 
