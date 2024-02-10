@@ -15,6 +15,8 @@ pub use crate::Environment;
 
 const WINDOW_SIZE: (u32, u32) = (1892, 1027);
 
+pub const _TEMP_KEEP_BROWSER_OPEN: bool = false;
+
 pub struct Engine<'a> {
     env: &'a Environment,
     browser: Browser,
@@ -45,15 +47,20 @@ impl<'a> Engine<'a> {
     async fn open_browser(env: &Environment) -> (Browser, JoinHandle<()>) {
         let exe = Self::get_chrome_exe(env);
 
-        let (mut browser, mut handler) = Browser::launch(
-            BrowserConfig::builder()
+        let (mut browser, mut handler) = Browser::launch({
+            let mut builder = BrowserConfig::builder()
                 .chrome_executable(exe)
-                // .with_head()
                 .window_size(WINDOW_SIZE.0, WINDOW_SIZE.1)
-                .viewport(None)
+                .viewport(None);
+
+            if _TEMP_KEEP_BROWSER_OPEN {
+                builder = builder.with_head();
+            }
+
+            builder
                 .build()
-                .expect("Failed to build browser config"),
-        )
+                .expect("Failed to build browser config")
+        })
         .await
         .expect("Failed to launch browser config");
 
@@ -99,6 +106,7 @@ impl<'a> Engine<'a> {
         let query = QueryAnswer::from_sql(sql, &self.conn);
 
         let mut context = TeraContext::new();
+        context.insert("DATA_DIR", &self.env.data_dir);
         context.insert("THEMES_DIR", &self.env.themes_dir);
         context.insert("theme", &self.env.theme);
 
@@ -125,12 +133,18 @@ impl<'a> Engine<'a> {
         )
         .await?;
 
-        page.close().await?;
+        if !_TEMP_KEEP_BROWSER_OPEN {
+            page.close().await?;
+        }
 
         Ok(())
     }
 
-    pub async fn close(&mut self) {
-        self.browser.close().await.expect("Failed to close browser");
+    pub async fn close(mut self) {
+        if _TEMP_KEEP_BROWSER_OPEN {
+            self.event_task_handle.await;
+        } else {
+            self.browser.close().await.expect("Failed to close browser");
+        }
     }
 }
