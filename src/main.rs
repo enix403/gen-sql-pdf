@@ -1,6 +1,6 @@
-// #![allow(unused)]
-// #![allow(unused_variables)]
-// #![allow(unused_mut)]
+#![allow(unused)]
+#![allow(unused_variables)]
+#![allow(unused_mut)]
 
 use std::error::Error;
 use std::path::PathBuf;
@@ -10,6 +10,7 @@ use clap::Parser;
 pub mod database;
 pub mod input;
 pub mod render;
+pub mod pdfgen;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -52,17 +53,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
     };
 
     let mut engine = render::Engine::new(&env).await;
-    
 
-    let sql = r#"
-        select ename, sal, sal + comm as "total salary", sal * 1.25 as "new salary",
-            sal * 1.25 - sal as "bonus",
-            sal * 2 as "more bonus"
-        from
-            emp
-    "#;
+    // let sql = r#"
+    //     select ename, sal, sal + comm as "total salary", sal * 1.25 as "new salary",
+    //         sal * 1.25 - sal as "bonus",
+    //         sal * 2 as "more bonus"
+    //     from
+    //         emp
+    // "#;
 
-    engine.process_query(sql).await?;
+    let qlist = input::QueryList::read_from_file(&env.infile);
+    pdfgen::create_pdf(qlist, &mut engine).await;
 
     engine.close().await;
 

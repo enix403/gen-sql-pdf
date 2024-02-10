@@ -12,7 +12,9 @@ use sqlformat::{format as format_sql, FormatOptions, Indent, QueryParams};
 pub use crate::database::{self, Connection, QueryAnswer};
 pub use crate::Environment;
 
-const WINDOW_SIZE: (u32, u32) = (1892, 1027);
+// const WINDOW_SIZE: (u32, u32) = (1892, 1027);
+const WINDOW_SIZE: (u32, u32) = (1892, 2054);
+// const WINDOW_SIZE: (u32, u32) = (1516, 822);
 
 pub const _TEMP_KEEP_BROWSER_OPEN: bool = false;
 
@@ -98,7 +100,7 @@ impl<'a> Engine<'a> {
         }
     }
 
-    pub async fn process_query(&mut self, sql: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn process_query(&mut self, sql: &str) -> Result<Vec<u8>, Box<dyn std::error::Error>> {
         let query = QueryAnswer::from_sql(sql, &self.conn);
 
         let mut context = TeraContext::new();
@@ -131,14 +133,13 @@ impl<'a> Engine<'a> {
         page.set_content(html).await?;
         page.wait_for_navigation().await?;
 
-        page.save_screenshot(
+        let image = page.screenshot(
             ScreenshotParams::builder()
                 .format(CaptureScreenshotFormat::Jpeg)
                 .quality(100)
                 .full_page(false)
                 .omit_background(false)
                 .build(),
-            "example.jpg",
         )
         .await?;
 
@@ -146,7 +147,7 @@ impl<'a> Engine<'a> {
             page.close().await?;
         }
 
-        Ok(())
+        Ok(image)
     }
 
     pub async fn close(mut self) {
