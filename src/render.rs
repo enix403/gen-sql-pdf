@@ -1,14 +1,13 @@
+use async_std::task::JoinHandle;
 use chromiumoxide::{
-    cdp::browser_protocol::page::{CaptureScreenshotFormat, PrintToPdfParams},
-    page::ScreenshotParams,
-    Browser, BrowserConfig, Handler,
+    cdp::browser_protocol::page::CaptureScreenshotFormat, page::ScreenshotParams, Browser,
+    BrowserConfig,
 };
 use futures::StreamExt;
-use std::path::{Path, PathBuf};
-
-use async_std::task::JoinHandle;
-
+use std::path::PathBuf;
 use tera::{Context as TeraContext, Tera};
+
+use sqlformat::{format as format_sql, FormatOptions, Indent, QueryParams};
 
 pub use crate::database::{self, Connection, QueryAnswer};
 pub use crate::Environment;
@@ -23,11 +22,10 @@ pub struct Engine<'a> {
     tera: Tera,
     index_file: String,
     conn: Connection,
-    pub event_task_handle: JoinHandle<()>
+    pub event_task_handle: JoinHandle<()>,
 }
 
 impl<'a> Engine<'a> {
-
     #[cfg(target_os = "linux")]
     fn get_chrome_exe(env: &Environment) -> PathBuf {
         let mut exe = env.data_dir.clone();
@@ -47,7 +45,7 @@ impl<'a> Engine<'a> {
     async fn open_browser(env: &Environment) -> (Browser, JoinHandle<()>) {
         let exe = Self::get_chrome_exe(env);
 
-        let (mut browser, mut handler) = Browser::launch({
+        let (browser, mut handler) = Browser::launch({
             let mut builder = BrowserConfig::builder()
                 .chrome_executable(exe)
                 .window_size(WINDOW_SIZE.0, WINDOW_SIZE.1)
@@ -57,9 +55,7 @@ impl<'a> Engine<'a> {
                 builder = builder.with_head();
             }
 
-            builder
-                .build()
-                .expect("Failed to build browser config")
+            builder.build().expect("Failed to build browser config")
         })
         .await
         .expect("Failed to launch browser config");
@@ -74,7 +70,7 @@ impl<'a> Engine<'a> {
 
     pub async fn new(env: &'a Environment) -> Self {
         // Setup browser
-        let (mut browser, mut task) = Self::open_browser(env).await;
+        let (browser, task) = Self::open_browser(env).await;
 
         // Setup Tera template system
         let templates_dir = env.data_dir.join("templates");
@@ -98,7 +94,7 @@ impl<'a> Engine<'a> {
             tera,
             index_file,
             conn,
-            event_task_handle: task
+            event_task_handle: task,
         }
     }
 
@@ -110,7 +106,18 @@ impl<'a> Engine<'a> {
         context.insert("THEMES_DIR", &self.env.themes_dir);
         context.insert("theme", &self.env.theme);
 
-        context.insert("sql", sql.trim());
+        context.insert("sql", {
+            format_sql(
+                sql,
+                &QueryParams::None,
+                FormatOptions {
+                    indent: Indent::Spaces(4),
+                    uppercase: true,
+                    lines_between_queries: 2,
+                },
+            )
+            .as_str()
+        });
         context.insert("headers", &query.headers);
         context.insert("rows", &query.rows);
 

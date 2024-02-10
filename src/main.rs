@@ -1,9 +1,9 @@
-#![allow(unused)]
-#![allow(unused_variables)]
-#![allow(unused_mut)]
+// #![allow(unused)]
+// #![allow(unused_variables)]
+// #![allow(unused_mut)]
 
 use std::error::Error;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use clap::Parser;
 
@@ -41,7 +41,7 @@ pub struct Environment {
 async fn main() -> Result<(), Box<dyn Error>> {
     let args = Args::parse();
 
-    let mut cwd = std::env::current_dir()?;
+    let cwd = std::env::current_dir()?;
 
     let env = Environment {
         dbfile: args.db,

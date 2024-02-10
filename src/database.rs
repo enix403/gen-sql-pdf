@@ -52,7 +52,7 @@ impl<'a> QueryAnswer<'a> {
 
                 let rendered = match value {
                     Value::Null => "(NULL)".to_string(),
-                    Value::Blob(val) => "(BLOB)".to_string(),
+                    Value::Blob(_) => "(BLOB)".to_string(),
                     Value::Text(val) => val,
                     Value::Real(val) => val.to_string(),
                     Value::Integer(val) => val.to_string(),
