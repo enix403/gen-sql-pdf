@@ -1,4 +1,5 @@
 @import url("./default-common.css");
+@import url("code-styles/github.min.css");
 
 :root {
   --color-sheet: #FDFDFD;
@@ -6,4 +7,8 @@
   --color-text: #000000;
   --color-border: #D7D8D8;
   --color-meta: #929292;
+}
+
+pre code#code {
+  background-color: transparent;
 }

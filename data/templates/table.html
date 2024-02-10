@@ -24,7 +24,9 @@
   {% for row in rows -%}
   <tr>
     {% for cell in row -%}
-      <td {% if cell.is_null %}class="meta-val"{% endif %} >{{cell.value}}</td>
+      <td {% if cell.is_null %}class="meta-val"{% endif %} >
+        {{cell.value}}
+      </td>
     {% endfor -%}
   </tr>
   {% endfor -%}

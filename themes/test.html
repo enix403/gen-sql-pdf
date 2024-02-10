@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-<style>
-  html,
-  body {
-    padding: 0px;
-    margin: 0px;
-  }
 
-  table {
-    width: 100%;
-    max-width: none;
-  }
-</style>
-<link rel="stylesheet" href="./default-dark.css" />
+<head>
+  <link rel="stylesheet" href="./default-light.css" />
+</head>
 
 <body>
+  <pre><code id="code" class="language-sql">SELECT
+  ename,
+  sal,
+  sal + comm as "total salary",
+  sal * 1.25 as "new salary",
+  sal * 1.25 - sal as "bonus",
+  sal * 2 as "more bonus"
+FROM
+  emp</code></pre>
+
   <table>
     <tr>
       <th>EMPLOYEE NAME</th>
@@ -122,6 +123,14 @@
       <td>325</td>
     </tr>
   </table>
+  <script type="module">
+    import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js';
+    import sql from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/languages/sql.min.js';
+    hljs.registerLanguage('sql', sql);
+
+    hljs.highlightAll();
+
+  </script>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 @import url("./default-common.css");
+@import url("code-styles/nord.min.css");
 
 :root {
   --color-sheet: #090A0A;
@@ -6,4 +7,8 @@
   --color-text: #FFFFFF;
   --color-border: #222323;
   --color-meta: #4C4D4E;
+}
+
+pre code#code {
+  background-color: transparent;
 }

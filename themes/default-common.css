@@ -1,6 +1,45 @@
 @import url("fonts/Barlow/stylesheet.css");
+@import url("fonts/FiraCode/stylesheet.css");
 
-th, td {
+html,
+body,
+pre {
+  padding: 0px;
+  margin: 0px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-sheet);
+  color: var(--color-text);
+  font-family: "Fira Code";
+  font-weight: 400;
+  font-size: 16px;
+}
+
+/* ==================== */
+
+pre code#code {
+  min-height: 300px;
+  padding: 24px 32px !important;
+  font-weight: 400;
+  font-family: "Fira Code";
+}
+
+/* ==================== */
+
+table {
+  width: 100%;
+  max-width: none;
+}
+
+th,
+td {
   width: 1px;
   white-space: nowrap;
 }
@@ -9,17 +48,11 @@ td:last-child {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   text-align: left;
 }
 
-body {
-  background-color: var(--color-sheet);
-  color: var(--color-text);
-/*  font-family: 'Barlow';*/
-   font-family: 'Fira Code'; 
-  font-weight: 400;
-}
 
 table,
 th,
@@ -35,9 +68,9 @@ th {
   border-width: 0;
   border-top-width: 1px;
   border-bottom-width: 1px;
-
 }
-td, th {
+td,
+th {
   padding: 12px 16px;
 }
 
