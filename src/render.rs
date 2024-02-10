@@ -133,11 +133,12 @@ impl<'a> Engine<'a> {
 
         page.save_screenshot(
             ScreenshotParams::builder()
-                .format(CaptureScreenshotFormat::Png)
+                .format(CaptureScreenshotFormat::Jpeg)
+                .quality(100)
                 .full_page(false)
                 .omit_background(false)
                 .build(),
-            "example.png",
+            "example.jpg",
         )
         .await?;
 

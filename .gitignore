@@ -1,5 +1,7 @@
 /target
 /kt
 /data/chrome-*
-*.png
+/*.png
+/*.jpg
+/*.pdf
 *.sublime-*

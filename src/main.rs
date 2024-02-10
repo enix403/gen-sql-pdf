@@ -52,6 +52,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     };
 
     let mut engine = render::Engine::new(&env).await;
+    
 
     let sql = r#"
         select ename, sal, sal + comm as "total salary", sal * 1.25 as "new salary",
