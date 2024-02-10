@@ -1,4 +1,4 @@
-/*@import url("fonts/Barlow/stylesheet.css");*/
+@import url("fonts/FiraSans/stylesheet.css");
 @import url("fonts/FiraCode/stylesheet.css");
 
 html,
@@ -17,7 +17,7 @@ pre {
 body {
   background-color: var(--color-sheet);
   color: var(--color-text);
-  font-family: "Fira Code";
+  font-family: "Fira Sans";
   font-weight: 400;
   font-size: 16px;
 }
