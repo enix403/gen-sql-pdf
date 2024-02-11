@@ -4,4 +4,6 @@
 /*.png
 /*.jpg
 /*.pdf
+/pio
+/todo.txt
 *.sublime-*

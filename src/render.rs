@@ -135,10 +135,10 @@ impl<'a> Renderer<'a> {
 
         let image = page.screenshot(
             ScreenshotParams::builder()
-                .format(CaptureScreenshotFormat::Jpeg)
+                .format(CaptureScreenshotFormat::Png)
                 .quality(100)
                 .full_page(false)
-                .omit_background(false)
+                // .omit_background(false)
                 .build(),
         )
         .await?;

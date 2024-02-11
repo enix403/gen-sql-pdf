@@ -55,6 +55,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut renderer = render::Renderer::new(&env).await;
     let qlist = input::QueryList::read_from_file(&env.infile);
     pdfgen::create_pdf(qlist, &mut renderer, cwd.join("output.pdf")).await;
+    // pdfgen::save_image(
+    //     &renderer.render_query(&qlist.queries[0]).await.unwrap(),
+    //     "example.jpg",
+    // );
 
     renderer.dispose().await;
 
